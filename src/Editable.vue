@@ -11,14 +11,22 @@
 
 <script>
   export default {
-    props: ['value', 'editing'],
+    props: ['initialValue'],
+    data() { return {
+      editing: false,
+      value: null
+    } },
+    created() {
+      this.value = this.initialValue
+    },
     methods: {
       edit() {
         this.editing = true
+        this.$parent.switchOnPartialEditing()
       },
       save() {
         this.editing = false
       }
-    }
+    },
   }
 </script>

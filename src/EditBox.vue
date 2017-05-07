@@ -1,24 +1,35 @@
 <template>
-  <div class="edit-box" v-on:click="saveAll">
-    <div class="edit-tools">
-      <button v-on:click.stop="toggle">Edit</button>
+  <div>
+    <div class="edit-box" v-bind:class="boxClass" v-on:click.self="saveAll">
+      <div class="edit-tools">
+        <button v-on:click.stop="toggle">{{buttonLabel}}</button>
+      </div>
+      <slot></slot>
     </div>
-    Edit-Mode: {{editMode}}
-    <slot></slot>
+    <div class="edit-modal-bg" v-if="editMode" v-on:click.self="saveAll"></div>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['editMode'],
+    data() {
+      return {
+        editMode: false
+      }
+    },
+    //props: ["editables", "editMode"],
+    //created() {
+    //  this.editables = []
+    //  this.editMode = false
+    //},
     methods: {
       saveAll() {
         this.editMode = false
-        this.$store.store.state.editMode = this.editMode
+        this.$children.forEach(c => c.save())
       },
       editAll() {
         this.editMode = true
-        this.$store.store.state.editMode = this.editMode
+        this.$children.forEach(c => c.edit())
       },
       toggle() {
         this.editMode = ! this.editMode
@@ -27,11 +38,18 @@
         } else {
           this.saveAll()
         }
+      },
+      switchOnPartialEditing() {
+        this.editMode = true
       }
     },
-    created() {
-      this.$store.store.state.editBoxes.push(this)
-      this.editMode = false
+    computed: {
+      boxClass() {
+        if (this.editMode) { return "edit-mode" } else { return "" }
+      },
+      buttonLabel() {
+        if (this.editMode) { return "Save" } else { return "Edit" }
+      }
     }
   }
 </script>
@@ -44,6 +62,17 @@
     border-radius: 3px
     font-family: Helvetica Neue
     min-height: 400px
+  .edit-box.edit-mode
+    z-index: 6000
+    position: relative
   .edit-tools
     text-align: right
+  .edit-modal-bg
+    position: fixed
+    top: 0px
+    left: 0px
+    right: 0px
+    bottom: 0px
+    z-index: 5000
+    background: rgba(0,0,0, 0.8);
 </style>

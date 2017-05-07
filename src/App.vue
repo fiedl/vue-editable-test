@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <edit-box>
-      <editable value="Foo"></editable>
-      <editable value="Bar"></editable>
+      <editable initial-value="Foo"></editable>
+      <editable initial-value="Bar"></editable>
     </edit-box>
   </div>
 </template>
