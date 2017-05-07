@@ -14,11 +14,11 @@
     methods: {
       saveAll() {
         this.editMode = false
-        this.$children[0].$emit('save')
+        this.$store.store.state.editMode = this.editMode
       },
       editAll() {
         this.editMode = true
-        this.$children[0].$emit('edit')
+        this.$store.store.state.editMode = this.editMode
       },
       toggle() {
         this.editMode = ! this.editMode
@@ -30,6 +30,7 @@
       }
     },
     created() {
+      this.$store.store.state.editBoxes.push(this)
       this.editMode = false
     }
   }
