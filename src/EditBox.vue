@@ -6,7 +6,9 @@
       </div>
       <slot></slot>
     </div>
-    <div class="edit-modal-bg" v-if="editMode" v-on:click.self="saveAll"></div>
+    <transition name="fade">
+      <div class="edit-modal-bg" v-if="editMode" v-on:click.self="saveAll"></div>
+    </transition>
   </div>
 </template>
 
@@ -74,5 +76,10 @@
     right: 0px
     bottom: 0px
     z-index: 5000
-    background: rgba(0,0,0, 0.8);
+    background: black
+    opacity: 0.6
+  .fade-enter-active, .fade-leave-active
+    transition: opacity 0.25s ease-out
+  .fade-enter, .fade-leave-to
+    opacity: 0
 </style>
