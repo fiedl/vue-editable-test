@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <editable value="Foo"></editable>
+    <edit-box>
+      <editable value="Foo"></editable>
+      <editable value="Bar"></editable>
+    </edit-box>
   </div>
 </template>
 
@@ -9,7 +12,6 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
     }
   }
 }
