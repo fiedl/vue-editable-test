@@ -4,7 +4,7 @@
       <div key="3" class='read' v-on:click="edit" v-on:mouseover="suggestEdit" v-if="!showEditField">
         {{value}}
       </div>
-      <div key="1" class='edit' v-if="showEditField" v-on:click="edit" v-on:keyup.enter="save" v-on:keyup="pushPropertyToStore" v-on:mouseout="cancelSuggestEditWithDelay">
+      <div key="1" class='edit' v-if="showEditField" v-on:click="edit" v-on:keyup.enter="saveAll" v-on:keyup="pushPropertyToStore" v-on:mouseout="cancelSuggestEditWithDelay">
         <input type="text" v-model="value" v-on:keydown="edit" autofocus />
       </div>
     </transition>
@@ -44,6 +44,9 @@
           }
         }
       },
+      saveAll() {
+        this.$parent.saveAll()
+      },
       suggestEdit() {
         this.suggestingEdit = true
       },
@@ -59,35 +62,16 @@
         setTimeout(this.cancelSuggestEdit, 1500)
       },
       submitSave() {
-        //alert(`Submitting ${this.value}.`)
+        alert(`Submitting ${this.value}.`)
       },
       pushPropertyToStore() {
-        propertyStore.updateProperty(this.property, this.value)
+        propertyStore.updateProperty(this)
       }
     },
     computed: {
       showEditField() {
         return (this.editing || this.suggestingEdit)
       },
-      //valueFromPropertyStore() {
-      //  return this.$store.state.properties[this.property]
-      //},
-      //value: {
-      //  get() {
-      //    if (this.property) {
-      //      return this.$store.state.properties[this.property]
-      //    } else {
-      //      return this.localValue
-      //    }
-      //  },
-      //  set(newValue) {
-      //    if (this.property) {
-      //      this.$store.state.properties[this.property] = newValue
-      //    } else {
-      //      this.localValue = newValue
-      //    }
-      //  }
-      //}
     }
   }
 </script>
