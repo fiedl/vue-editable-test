@@ -5,11 +5,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    editMode: false,
-    editBoxes: []
+    properties: {
+    }
   }
 })
-
-export default {
-  store
-}

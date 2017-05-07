@@ -3,8 +3,14 @@
     <edit-box>
       <table>
         <tr>
+          <th></th>
+          <td><h1>
+            <editable property="username" initial-value="John Doe"></editable>
+          </h1></td>
+        </tr>
+        <tr>
           <th>Name</th>
-          <td><editable initial-value="John Doe"></editable></td>
+          <td><editable property="username" initial-value="John Doe"></editable></td>
         </tr>
         <tr>
           <th>Favorite Fast Food</th>
