@@ -1,8 +1,16 @@
 <template>
   <div id="app">
     <edit-box>
-      <editable initial-value="Foo"></editable>
-      <editable initial-value="Bar"></editable>
+      <table>
+        <tr>
+          <th>Name</th>
+          <td><editable initial-value="John Doe"></editable></td>
+        </tr>
+        <tr>
+          <th>Favorite Fast Food</th>
+          <td><editable initial-value="Burgers"></editable></td>
+        </tr>
+      </table>
     </edit-box>
   </div>
 </template>
@@ -22,7 +30,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
@@ -43,5 +50,13 @@ li {
 
 a {
   color: #42b983;
+}
+
+table {
+  border-spacing: 10px;
+}
+
+table th {
+  text-align: right;
 }
 </style>

@@ -43,6 +43,9 @@
       },
       switchOnPartialEditing() {
         this.editMode = true
+      },
+      switchOffPartialEditing() {
+        this.editMode = false
       }
     },
     computed: {

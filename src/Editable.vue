@@ -1,11 +1,13 @@
 <template>
   <div>
-    <div class='read' v-on:click="edit" v-if="!editing">
-      {{value}}
-    </div>
-    <div class='edit' v-if="editing" v-on:keyup.enter="save">
-      <input type="text" v-model="value">
-    </div>
+    <transition name="fade" mode="out-in">
+      <div key="3" class='read' v-on:click="edit" v-on:mouseover="suggestEdit" v-if="!showEditField">
+        {{value}}
+      </div>
+      <div key="1" class='edit' v-if="showEditField" v-on:click="edit" v-on:keyup.enter="save" v-on:mouseout="cancelSuggestEditWithDelay">
+        <input type="text" v-model="value" v-on:keydown="edit" autofocus />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -14,19 +16,53 @@
     props: ['initialValue'],
     data() { return {
       editing: false,
-      value: null
+      suggestingEdit: false,
+      value: null,
+      valueBeforeEdit: null
     } },
     created() {
       this.value = this.initialValue
     },
     methods: {
       edit() {
-        this.editing = true
-        this.$parent.switchOnPartialEditing()
+        if (! this.editing) {
+          this.valueBeforeEdit = this.value
+          this.editing = true
+          this.$parent.switchOnPartialEditing()
+        }
       },
       save() {
+        this.suggestingEdit = false
+        if (this.editing) {
+          this.editing = false
+          this.$parent.switchOffPartialEditing()
+          if (this.value != this.valueBeforeEdit) {
+            this.submitSave()
+          }
+        }
+      },
+      suggestEdit() {
+        this.suggestingEdit = true
+      },
+      cancel() {
+        this.value = this.valueBeforeEdit
         this.editing = false
+        this.suggestingEdit = false
+      },
+      cancelSuggestEdit() {
+        this.suggestingEdit = false
+      },
+      cancelSuggestEditWithDelay() {
+        setTimeout(this.cancelSuggestEdit, 1500)
+      },
+      submitSave() {
+        alert(`Submitting ${this.value}.`)
       }
     },
+    computed: {
+      showEditField() {
+        return (this.editing || this.suggestingEdit)
+      }
+    }
   }
 </script>
