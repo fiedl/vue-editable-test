@@ -14,9 +14,19 @@
     methods: {
       saveAll() {
         this.editMode = false
+        this.$children[0].$emit('save')
+      },
+      editAll() {
+        this.editMode = true
+        this.$children[0].$emit('edit')
       },
       toggle() {
         this.editMode = ! this.editMode
+        if (this.editMode == true) {
+          this.editAll()
+        } else {
+          this.saveAll()
+        }
       }
     },
     created() {

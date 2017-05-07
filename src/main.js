@@ -6,7 +6,7 @@ import EditBox from './EditBox.vue'
 Vue.component('editable', Editable)
 Vue.component('edit-box', EditBox)
 
-new Vue({
+app = new Vue({
   el: '#app',
   render: h => h(App)
 })
