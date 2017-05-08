@@ -23,12 +23,13 @@
 <script>
   import Vue from 'vue'
   import { propertyStore } from './propertyStore'
+  import suggestEdit from './mixins/suggestEdit'
 
   export default {
+    mixins: [suggestEdit],
     props: ['initialValue', 'property', 'type', 'help'],
     data() { return {
       editing: false,
-      suggestingEdit: false,
       value: null,
       valueBeforeEdit: null,
       success: false,
@@ -55,7 +56,6 @@
         }
       },
       save() {
-        this.suggestingEdit = false
         if (this.editing) {
           this.editing = false
           this.$parent.switchOffPartialEditing()
@@ -70,25 +70,12 @@
       cancelAll() {
         this.$parent.cancelAll()
       },
-      suggestEdit() {
-        if (! this.$parent.editMode) {
-          this.suggestingEdit = true
-          this.cancelSuggestEditWithDelay()
-        }
-      },
       cancel() {
         if (this.editing) {
           this.value = this.valueBeforeEdit
           this.editing = false
           this.error = false
         }
-        this.suggestingEdit = false
-      },
-      cancelSuggestEdit() {
-        this.suggestingEdit = false
-      },
-      cancelSuggestEditWithDelay() {
-        setTimeout(this.cancelSuggestEdit, 1500)
       },
       submitSave() {
         var self = this
@@ -118,7 +105,6 @@
       },
       editingClass() {
         if (this.error) { return "error" }
-        if (this.suggestingEdit && !this.editing) { return "suggesting" } else { return "" }
       },
       inputField() {
         return this.$el.getElementsByTagName("input")[0] || this.$el.getElementsByTagName("textarea")[0]
