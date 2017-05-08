@@ -16,6 +16,10 @@
           <th>Favorite Fast Food</th>
           <td><editable initial-value="Burgers"></editable></td>
         </tr>
+        <tr>
+          <th>Bio</th>
+          <td><editable initial-value="" type="textarea"></editable></td>
+        </tr>
       </table>
     </edit-box>
   </div>

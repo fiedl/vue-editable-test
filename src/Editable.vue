@@ -4,8 +4,9 @@
       <div key="3" class='read' v-on:click="edit" v-on:mouseover="suggestEdit" v-if="!showEditField">
         {{value}}
       </div>
-      <div key="1" class='edit' v-if="showEditField" v-on:click="edit" v-on:keyup.enter="saveAll" v-on:keyup="pushPropertyToStore" v-on:mouseout="cancelSuggestEditWithDelay">
-        <input type="text" v-model="value" v-on:keydown="edit" autofocus />
+      <div key="1" class='edit' v-if="showEditField" v-on:click="edit" v-on:mouseout="cancelSuggestEditWithDelay">
+        <textarea v-if="typeIsTextarea" v-on:keydown="edit" v-model="value" autofocus></textarea>
+        <input v-if="!typeIsTextarea" type="text" v-model="value" v-on:keydown="edit" v-on:keyup.enter="saveAll" v-on:keyup="pushPropertyToStore" autofocus />
       </div>
     </transition>
   </div>
@@ -15,7 +16,7 @@
   import { propertyStore } from './propertyStore'
 
   export default {
-    props: ['initialValue', 'property'],
+    props: ['initialValue', 'property', 'type'],
     data() { return {
       editing: false,
       suggestingEdit: false,
@@ -72,6 +73,9 @@
       showEditField() {
         return (this.editing || this.suggestingEdit)
       },
+      typeIsTextarea() {
+        return (this.type == "textarea")
+      }
     }
   }
 </script>
