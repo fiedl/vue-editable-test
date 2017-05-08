@@ -1,16 +1,21 @@
 <template>
   <div v-on:mouseenter="suggestEdit">
     <transition name="fade" mode="out-in">
+
       <div key="3" class='read' v-on:click="edit" v-if="!showEditField">
         {{value}}
         <span v-if="submitting" class="submitting">•••</span>
         <span v-if="success" class="success">✔</span>
+        <span v-if="error" class="error-icon">✘</span>
       </div>
+
       <div key="1" class='edit' v-bind:class="editingClass" v-if="showEditField" v-on:click="edit" v-on:keydown.esc="cancelAll">
         <textarea v-if="typeIsTextarea" v-on:keydown="keydownToBeginEditing" v-model.trim="value" autofocus></textarea>
         <input v-if="!typeIsTextarea" type="text" v-model.trim="value" v-on:keydown="keydownToBeginEditing" v-on:keyup.enter="saveAll" v-on:keyup="pushPropertyToStore" autofocus />
+        <div class="error-message" v-if="error">{{error}}</div>
         <div class="help" v-if="help">{{help}}</div>
       </div>
+
     </transition>
   </div>
 </template>
@@ -27,7 +32,8 @@
       value: null,
       valueBeforeEdit: null,
       success: false,
-      submitting: false
+      submitting: false,
+      error: null
     } },
     created() {
       this.value = this.initialValue
@@ -74,6 +80,7 @@
         if (this.editing) {
           this.value = this.valueBeforeEdit
           this.editing = false
+          this.error = false
         }
         this.suggestingEdit = false
       },
@@ -88,7 +95,11 @@
         this.submitting = true
         setTimeout(function() {
           self.submitting = false
-          self.success = true
+          self.success = false
+          self.error = "This did not work."
+          var oldValue = self.valueBeforeEdit
+          self.edit()
+          self.valueBeforeEdit = oldValue // because edit() replaces this value
         }, 1000)
       },
       pushPropertyToStore() {
@@ -106,6 +117,7 @@
         return (this.type == "textarea")
       },
       editingClass() {
+        if (this.error) { return "error" }
         if (this.suggestingEdit && !this.editing) { return "suggesting" } else { return "" }
       },
       inputField() {
@@ -130,13 +142,20 @@
     color: green
   .submitting
     color: yellow
-  .help
+  .error-icon
+    color: red
+  .help, .error-message
     margin-top: 5px
     margin-bottom: 10px
     font-size: 90%
     max-width: 90%
+  .error-message
+    color: red
+    font-size: 11pt
   .suggesting.edit
     input, textarea
       background: rgba(255,255,255, 0.2)
-
+  .edit.error
+    input, textarea
+      background: rgba(255,0,0, 0.6)
 </style>
