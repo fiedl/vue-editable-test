@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div v-on:mouseenter="suggestEdit">
     <transition name="fade" mode="out-in">
-      <div key="3" class='read' v-on:click="edit" v-on:mouseover="suggestEdit" v-if="!showEditField">
+      <div key="3" class='read' v-on:click="edit" v-if="!showEditField">
         {{value}}
         <span v-if="submitting" class="submitting">•••</span>
         <span v-if="success" class="success">✔</span>
       </div>
-      <div key="1" class='edit' v-if="showEditField" v-on:click="edit" v-on:keydown.esc="cancelAll">
+      <div key="1" class='edit' v-bind:class="editingClass" v-if="showEditField" v-on:click="edit" v-on:keydown.esc="cancelAll">
         <textarea v-if="typeIsTextarea" v-on:keydown="keydownToBeginEditing" v-model="value" autofocus></textarea>
         <input v-if="!typeIsTextarea" type="text" v-model="value" v-on:keydown="keydownToBeginEditing" v-on:keyup.enter="saveAll" v-on:keyup="pushPropertyToStore" autofocus />
         <div class="help" v-if="help">{{help}}</div>
@@ -58,8 +58,10 @@
         this.$parent.cancelAll()
       },
       suggestEdit() {
-        this.suggestingEdit = true
-        this.cancelSuggestEditWithDelay()
+        if (! this.$parent.editMode) {
+          this.suggestingEdit = true
+          this.cancelSuggestEditWithDelay()
+        }
       },
       cancel() {
         if (this.editing) {
@@ -95,15 +97,25 @@
       },
       typeIsTextarea() {
         return (this.type == "textarea")
+      },
+      editingClass() {
+        if (this.suggestingEdit && !this.editing) { return "suggesting" } else { return "" }
       }
     }
   }
 </script>
 
 <style lang="sass">
-  input, select, textarea, button
-    font-family: inherit
+  input, select, textarea
+    border: none
+    padding: 0
+    margin: 0
+    font: inherit
+    color: inherit
+    line-height: inherit
     font-size: inherit
+    text-align: inherit
+    vertical-align: top
   .success
     color: green
   .submitting
@@ -113,4 +125,8 @@
     margin-bottom: 10px
     font-size: 90%
     max-width: 90%
+  .suggesting.edit
+    input, textarea
+      background: rgba(255,255,255, 0.2)
+
 </style>
