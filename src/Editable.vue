@@ -3,6 +3,8 @@
     <transition name="fade" mode="out-in">
       <div key="3" class='read' v-on:click="edit" v-on:mouseover="suggestEdit" v-if="!showEditField">
         {{value}}
+        <span v-if="submitting" class="submitting">•••</span>
+        <span v-if="success" class="success">✔</span>
       </div>
       <div key="1" class='edit' v-if="showEditField" v-on:click="edit" v-on:keydown.esc="cancelAll">
         <textarea v-if="typeIsTextarea" v-on:keydown="keydownToBeginEditing" v-model="value" autofocus></textarea>
@@ -21,7 +23,9 @@
       editing: false,
       suggestingEdit: false,
       value: null,
-      valueBeforeEdit: null
+      valueBeforeEdit: null,
+      success: false,
+      submitting: false
     } },
     created() {
       this.value = this.initialValue
@@ -32,6 +36,7 @@
         if (! this.editing) {
           this.valueBeforeEdit = this.value
           this.editing = true
+          this.success = false
           this.$parent.switchOnPartialEditing()
         }
       },
@@ -69,7 +74,12 @@
         setTimeout(this.cancelSuggestEdit, 1500)
       },
       submitSave() {
-        alert(`Submitting ${this.value}.`)
+        var self = this
+        this.submitting = true
+        setTimeout(function() {
+          self.submitting = false
+          self.success = true
+        }, 1000)
       },
       pushPropertyToStore() {
         propertyStore.updateProperty(this)
@@ -88,3 +98,13 @@
     }
   }
 </script>
+
+<style lang="sass">
+  input, select, textarea, button
+    font-family: inherit
+    font-size: inherit
+  .success
+    color: green
+  .submitting
+    color: yellow
+</style>
