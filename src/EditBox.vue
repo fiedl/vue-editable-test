@@ -28,6 +28,10 @@
         this.editMode = true
         this.$children.forEach(c => c.edit())
       },
+      cancelAll() {
+        this.editMode = false
+        this.$children.forEach(c => c.cancel())
+      },
       toggle() {
         this.editMode = ! this.editMode
         if (this.editMode == true) {
