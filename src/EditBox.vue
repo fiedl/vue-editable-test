@@ -19,11 +19,6 @@
         editMode: false
       }
     },
-    //props: ["editables", "editMode"],
-    //created() {
-    //  this.editables = []
-    //  this.editMode = false
-    //},
     methods: {
       saveAll() {
         this.editMode = false
@@ -43,6 +38,7 @@
       },
       switchOnPartialEditing() {
         this.editMode = true
+        this.$children.forEach(c => c.suggestingEdit = false)
       },
       switchOffPartialEditing() {
         this.editMode = false
