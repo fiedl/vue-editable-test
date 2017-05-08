@@ -4,7 +4,7 @@
       <div key="3" class='read' v-on:click="edit" v-on:mouseover="suggestEdit" v-if="!showEditField">
         {{value}}
       </div>
-      <div key="1" class='edit' v-if="showEditField" v-on:click="edit" v-on:mouseout="cancelSuggestEditWithDelay" v-on:keydown.esc="cancelAll">
+      <div key="1" class='edit' v-if="showEditField" v-on:click="edit" v-on:keydown.esc="cancelAll">
         <textarea v-if="typeIsTextarea" v-on:keydown="keydownToBeginEditing" v-model="value" autofocus></textarea>
         <input v-if="!typeIsTextarea" type="text" v-model="value" v-on:keydown="keydownToBeginEditing" v-on:keyup.enter="saveAll" v-on:keyup="pushPropertyToStore" autofocus />
       </div>
@@ -53,6 +53,7 @@
       },
       suggestEdit() {
         this.suggestingEdit = true
+        this.cancelSuggestEditWithDelay()
       },
       cancel() {
         if (this.editing) {
