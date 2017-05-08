@@ -12,53 +12,55 @@
   </div>
 </template>
 
-<script>
-  export default {
-    data() {
-      return {
-        editMode: false
-      }
-    },
-    methods: {
-      saveAll() {
-        this.editMode = false
-        this.$children.forEach(c => c.save())
-      },
-      editAll() {
-        this.editMode = true
-        this.$children.forEach(c => c.edit())
-        var firstEditable = this.$children[0]
-        setTimeout(function() { firstEditable.focus() }, 300)
-      },
-      cancelAll() {
-        this.editMode = false
-        this.$children.forEach(c => c.cancel())
-      },
-      toggle() {
-        this.editMode = ! this.editMode
-        if (this.editMode == true) {
-          this.editAll()
-        } else {
-          this.saveAll()
-        }
-      },
-      switchOnPartialEditing() {
-        this.editMode = true
-        this.$children.forEach(c => c.suggestingEdit = false)
-      },
-      switchOffPartialEditing() {
-        this.editMode = false
-      }
-    },
-    computed: {
-      boxClass() {
-        if (this.editMode) { return "edit-mode" } else { return "" }
-      },
-      buttonLabel() {
-        if (this.editMode) { return "Save" } else { return "Edit" }
-      }
-    }
-  }
+<script lang="coffee">
+EditBox = {
+  data: ->
+    { editMode: false }
+  methods:
+    saveAll: ->
+      @editMode = false
+      @$children.forEach (c) ->
+        c.save()
+        return
+      return
+    editAll: ->
+      @editMode = true
+      @$children.forEach (c) ->
+        c.edit()
+      firstEditable = @$children[0]
+      setTimeout (->
+        firstEditable.focus()
+      ), 300
+    cancelAll: ->
+      @editMode = false
+      @$children.forEach (c) ->
+        c.cancel()
+    toggle: ->
+      @editMode = !@editMode
+      if @editMode == true
+        @editAll()
+      else
+        @saveAll()
+    switchOnPartialEditing: ->
+      @editMode = true
+      @$children.forEach (c) ->
+        c.suggestingEdit = false
+    switchOffPartialEditing: ->
+      @editMode = false
+  computed:
+    boxClass: ->
+      if @editMode
+        'edit-mode'
+      else
+        ''
+    buttonLabel: ->
+      if @editMode
+        'Save'
+      else
+        'Edit'
+}
+
+`export default EditBox`
 </script>
 
 <style lang="sass">
