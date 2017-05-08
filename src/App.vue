@@ -11,6 +11,13 @@
         <editable-row property="username" label="Name" initial-value="John Doe"></editable-row>
         <editable-row label="Favorite Fast Food" initial-value="Burgers"></editable-row>
         <editable-row label="Bio" initial-value="" type="textarea"></editable-row>
+
+        <editable-row v-for="profile_field in profile_fields" key="profile_field.id" :label="profile_field.label" :initialValue="profile_field.value" :property="profile_field.property"></editable-row>
+
+        <tr>
+          <td></td><td><button @click="addProfileField">Add</button></td>
+        </tr>
+
       </table>
     </edit-box>
 
@@ -22,12 +29,35 @@
 </template>
 
 <script>
+
+// http://stackoverflow.com/a/12675966/2066546
+Array.prototype.first = function() { return this[0] }
+Array.prototype.last = function() {
+  return this[this.length-1];
+}
+
 export default {
   name: 'app',
   data () {
     return {
+      profile_fields: [
+        {id: 123, property: 'phone', label: 'Phone', value: '123'},
+        {id: 124, property: 'email', label: 'Email', value: 'foo@example.com'}
+      ]
     }
   },
+  methods: {
+    addProfileField() {
+      self = this
+      self.profile_fields.push({id: null, label: "New", value: ""})
+      setTimeout(function() { self.editables.last().editAndFocus() }, 200)
+    }
+  },
+  computed: {
+    editables() {
+      return this.$children.first().$children
+    }
+  }
 }
 </script>
 

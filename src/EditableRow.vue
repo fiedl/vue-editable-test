@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <th v-on:mouseenter="suggestEdit" v-on:click="editAndFocus">{{label}}</th>
+    <th v-on:mouseenter="suggestEdit" v-on:click="editAndFocus" @dblclick="editLabel">{{label}}</th>
     <td><editable :property="property" :type="type" :initial-value="initialValue"></editable></td>
   </tr>
 </template>
@@ -18,7 +18,11 @@
       saveAll() { this.$parent.saveAll() },
       cancel() { this.editable.cancel() },
       cancelAll() { this.$parent.cancelAll() },
-      suggestEdit() { this.editable.suggestEdit() }
+      suggestEdit() { this.editable.suggestEdit() },
+      editLabel() {
+        var newLabel = prompt(`Rename the label of ${this.label}`, this.label)
+        this.label = newLabel
+      }
     },
     computed: {
       value: {

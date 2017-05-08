@@ -95,11 +95,12 @@
         this.submitting = true
         setTimeout(function() {
           self.submitting = false
-          self.success = false
-          self.error = "This did not work."
-          var oldValue = self.valueBeforeEdit
-          self.edit()
-          self.valueBeforeEdit = oldValue // because edit() replaces this value
+          // self.success = false
+          // self.error = "This did not work."
+          // var oldValue = self.valueBeforeEdit
+          // self.edit()
+          // self.valueBeforeEdit = oldValue // because edit() replaces this value
+          self.success = true
         }, 1000)
       },
       pushPropertyToStore() {

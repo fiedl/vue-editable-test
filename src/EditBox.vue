@@ -55,7 +55,7 @@ EditBox = {
         ''
     buttonLabel: ->
       if @editMode
-        'Save'
+        'Done'
       else
         'Edit'
 }
