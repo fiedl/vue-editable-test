@@ -82,7 +82,7 @@
     background: black
     opacity: 0.6
   .fade-enter-active, .fade-leave-active
-    transition: opacity 0.25s ease-out
+    transition: opacity 0.10s ease-out
   .fade-enter, .fade-leave-to
     opacity: 0
 </style>
