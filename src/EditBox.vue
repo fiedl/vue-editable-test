@@ -27,6 +27,8 @@
       editAll() {
         this.editMode = true
         this.$children.forEach(c => c.edit())
+        var firstEditable = this.$children[0]
+        setTimeout(function() { firstEditable.focus() }, 300)
       },
       cancelAll() {
         this.editMode = false

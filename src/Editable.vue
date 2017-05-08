@@ -7,8 +7,8 @@
         <span v-if="success" class="success">✔</span>
       </div>
       <div key="1" class='edit' v-bind:class="editingClass" v-if="showEditField" v-on:click="edit" v-on:keydown.esc="cancelAll">
-        <textarea v-if="typeIsTextarea" v-on:keydown="keydownToBeginEditing" v-model="value" autofocus></textarea>
-        <input v-if="!typeIsTextarea" type="text" v-model="value" v-on:keydown="keydownToBeginEditing" v-on:keyup.enter="saveAll" v-on:keyup="pushPropertyToStore" autofocus />
+        <textarea v-if="typeIsTextarea" v-on:keydown="keydownToBeginEditing" v-model.trim="value" autofocus></textarea>
+        <input v-if="!typeIsTextarea" type="text" v-model.trim="value" v-on:keydown="keydownToBeginEditing" v-on:keyup.enter="saveAll" v-on:keyup="pushPropertyToStore" autofocus />
         <div class="help" v-if="help">{{help}}</div>
       </div>
     </transition>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import { propertyStore } from './propertyStore'
 
   export default {
@@ -39,6 +40,12 @@
           this.editing = true
           this.success = false
           this.$parent.switchOnPartialEditing()
+        }
+      },
+      focus() {
+        if (this.inputField) {
+          self = this
+          Vue.nextTick(function() { self.inputField.focus() })
         }
       },
       save() {
@@ -100,6 +107,9 @@
       },
       editingClass() {
         if (this.suggestingEdit && !this.editing) { return "suggesting" } else { return "" }
+      },
+      inputField() {
+        return this.$el.getElementsByTagName("input")[0] || this.$el.getElementsByTagName("textarea")[0]
       }
     }
   }

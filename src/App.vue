@@ -8,18 +8,9 @@
             <editable property="username" initial-value="John Doe"></editable>
           </h1></td>
         </tr>
-        <tr>
-          <th>Name</th>
-          <td><editable property="username" initial-value="John Doe"></editable></td>
-        </tr>
-        <tr>
-          <th>Favorite Fast Food</th>
-          <td><editable initial-value="Burgers"></editable></td>
-        </tr>
-        <tr>
-          <th>Bio</th>
-          <td><editable initial-value="" type="textarea"></editable></td>
-        </tr>
+        <editable-row property="username" label="Name" initial-value="John Doe"></editable-row>
+        <editable-row label="Favorite Fast Food" initial-value="Burgers"></editable-row>
+        <editable-row label="Bio" initial-value="" type="textarea"></editable-row>
       </table>
     </edit-box>
 
