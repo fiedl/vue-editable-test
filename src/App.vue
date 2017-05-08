@@ -22,6 +22,11 @@
         </tr>
       </table>
     </edit-box>
+
+    <edit-box>
+      <h2>Additional info</h2>
+      <editable></editable>
+    </edit-box>
   </div>
 </template>
 

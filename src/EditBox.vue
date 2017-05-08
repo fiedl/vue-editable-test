@@ -66,7 +66,6 @@
     padding: 10px
     border-radius: 3px
     font-family: Helvetica Neue
-    min-height: 400px
   .edit-box.edit-mode
     z-index: 6000
     position: relative
