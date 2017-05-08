@@ -1,6 +1,8 @@
 # vue-editable-test
 
-> Testing in-place editing with vue js.
+Testing in-place editing with vue js.
+
+![image](screenshots/editmodedemo.gif)
 
 ## Build Setup
 
