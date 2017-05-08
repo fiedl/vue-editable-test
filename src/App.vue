@@ -25,7 +25,7 @@
 
     <edit-box>
       <h2>Additional info</h2>
-      <editable></editable>
+      <editable help="Thanks for adding more info. You can add anything you want here!"></editable>
     </edit-box>
   </div>
 </template>

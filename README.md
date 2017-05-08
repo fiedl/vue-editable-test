@@ -2,7 +2,7 @@
 
 Testing in-place editing with vue js.
 
-![image](screenshots/editmodedemo.gif)
+![image](screenshots/editmodedemo2.gif)
 
 ## Build Setup
 

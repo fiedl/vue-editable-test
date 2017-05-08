@@ -9,6 +9,7 @@
       <div key="1" class='edit' v-if="showEditField" v-on:click="edit" v-on:keydown.esc="cancelAll">
         <textarea v-if="typeIsTextarea" v-on:keydown="keydownToBeginEditing" v-model="value" autofocus></textarea>
         <input v-if="!typeIsTextarea" type="text" v-model="value" v-on:keydown="keydownToBeginEditing" v-on:keyup.enter="saveAll" v-on:keyup="pushPropertyToStore" autofocus />
+        <div class="help" v-if="help">{{help}}</div>
       </div>
     </transition>
   </div>
@@ -18,7 +19,7 @@
   import { propertyStore } from './propertyStore'
 
   export default {
-    props: ['initialValue', 'property', 'type'],
+    props: ['initialValue', 'property', 'type', 'help'],
     data() { return {
       editing: false,
       suggestingEdit: false,
@@ -107,4 +108,9 @@
     color: green
   .submitting
     color: yellow
+  .help
+    margin-top: 5px
+    margin-bottom: 10px
+    font-size: 90%
+    max-width: 90%
 </style>
