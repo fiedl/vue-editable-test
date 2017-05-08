@@ -7,13 +7,17 @@ export var propertyStore = new Vue({
   },
   methods: {
     registerEditable(editable) {
-      this.editables.push(editable)
+      if (editable.property) {
+        this.editables.push(editable)
+      }
     },
     updateProperty(sourceEditable) {
       var property = sourceEditable.property
-      var value = sourceEditable.value
-      this.properties[property] = value
-      this.notifyEditables(property, sourceEditable)
+      if (property) {
+        var value = sourceEditable.value
+        this.properties[property] = value
+        this.notifyEditables(property, sourceEditable)
+      }
     },
     notifyEditables(property, sourceEditable) {
       var value = this.properties[property]
